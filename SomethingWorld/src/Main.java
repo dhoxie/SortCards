@@ -6,30 +6,23 @@ public class Main {
 	// write your code here
         Scanner kb = new Scanner(System.in);
         ArrayList cards = inputToList(kb);
-        cards.trimToSize();
-        printList(insertionSort(cards));
+        //printList(cards);
+        //cards.trimToSize();
+        insertionSort(cards);
+        printList(cards);
     }
 
-    static ArrayList insertionSort(ArrayList source){
-        int i = 1;
-        while ( i < source.size()){
-            insertSorted((String)(source.get(i)), source, i);
-            i++;
-        }
-        return source;
-    }
-
-    static ArrayList insertSorted(String s, ArrayList source, int i){
-        int cur = i -1;
-        int curVal = cardValue((String)source.get(cur));
-        int iVal = cardValue((String)source.get(i));
-        while ((cur >= 0) && (curVal > iVal)){
-            source.set(cur + 1, source.get(cur));
-            cur = cur - 1;
-            curVal = cardValue((String)source.get(cur));
-        }
-        source.set(cur + 1, s);
-        return source;
+    static ArrayList insertionSort(ArrayList a){
+        for (int j=1; j<a.size(); j++){
+           String key = (String)a.get(j);
+           int i = j-1;
+           while (i > -1 && (cardValue((String)a.get(i)) > cardValue(key))){
+               a.set(i+1, a.get(i));
+               i = i-1;
+           }
+           a.set(i+1, key);
+       }
+       return a;
     }
 
     static void printList(ArrayList a){
@@ -54,40 +47,44 @@ public class Main {
 
     static int cardValue(String card){
         int value = 0;
-        String temp = card.substring(0, 1); //get first value
-        if (isLetter(temp)) value += letterToVal(temp);
-        else value += Integer.parseInt(temp);
-        String temp2 = card.substring(1);
-        if (isLetter(temp2)) value += letterToVal(temp2);
-        else value += Integer.parseInt(temp2);
+        char temp = card.charAt(0);//get first value
+        if (Character.isLetter(temp)) value += letterToVal(Character.toString(temp));
+        else value += Integer.parseInt(Character.toString(temp));
+        temp = card.charAt(1);
+        if (Character.isLetter(temp)) value += letterToVal(Character.toString(temp));
+        else value += Integer.parseInt(Character.toString(temp));
         return value;
     }
 
-    static boolean isLetter(String str){
-        final boolean b = str.equals("A") || str.equals("J") || str.equals("Q") || str.equals("K") || str.equals("D") || str.equals("C") || str.equals("H") || str.equals("S");
-        return b;
-    }
-
     static int letterToVal(String str){
+        int val = 0;
         switch(str){
             case "A":
-                return 1;
+                val = 1;
+                break;
+            case "T":
+                val = 10;
+                break;
             case "J":
-                return 11;
+                val = 11;
+                break;
             case "Q":
-                return 12;
+                val = 12;
+                break;
             case "K":
-                return 13;
-            case "D":
-                return 0;
+                val = 13;
+                break;
             case "C":
-                return 100;
+                val = 100;
+                break;
             case "H":
-                return 200;
+                val = 200;
+                break;
             case "S":
-                return 300;
+                val = 300;
+                break;
         }
-        return 0; //if str doesn't match any
+        return val;
     }
 
 }
