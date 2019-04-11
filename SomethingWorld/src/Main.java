@@ -46,6 +46,22 @@ public class Main {
         return cards;
     }
 
+    static ArrayList takeInput(Scanner kb){
+        ArrayList <ArrayList> cards = new ArrayList<>(); //store 5 card hands
+        String str = kb.next().trim();
+        do{
+            //create a hand - arraylist of 5 strings
+            ArrayList <String> hand = new ArrayList<>();
+            for (int x=0; x<5; x++){//add only 5 cards to hand
+                hand.add(str);
+                str = kb.next().trim();
+            }
+            //add hand to cards arraylist
+            cards.add(hand);
+        }while(!str.equals("00")); //leave when no more cards
+        return cards;
+    }
+
     static int cardValue(String card){
         int value = 0;
         char temp = card.charAt(0);//get first value
