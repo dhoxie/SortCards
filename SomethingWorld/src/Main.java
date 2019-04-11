@@ -6,23 +6,31 @@ public class Main {
 	// write your code here
         Scanner kb = new Scanner(System.in);
         ArrayList cards = inputToList(kb);
-        //printList(cards);
-        //cards.trimToSize();
-        insertionSort(cards);
+        cards = insertionSort(cards, "suit");
+        cards = insertionSort(cards, "val");
         printList(cards);
+        //printList(insertionSort(cards));
     }
 
-    static ArrayList insertionSort(ArrayList a){
-        for (int j=1; j<a.size(); j++){
-           String key = (String)a.get(j);
-           int i = j-1;
-           while (i > -1 && (cardValue((String)a.get(i)) > cardValue(key))){
-               a.set(i+1, a.get(i));
-               i = i-1;
-           }
-           a.set(i+1, key);
-       }
+    static ArrayList insertionSort(ArrayList a, String t) throws IndexOutOfBoundsException{
+        int j = 1;
+        while (j < a.size()){
+            String key = (String)a.get(j);
+            int i = j -1;
+            while (i > -1 && (compareType(t, ((String)a.get(i)), key)) > 0){ //change to > 0
+                a.set(i+1, a.get(i));
+                i = i -1;
+            }
+            a.set(i+1, key);
+            j = j+1;
+        }
        return a;
+    }
+
+    static int compareType(String t, String i, String key){
+        if (t.equals("suit"))
+            return suitValue(i) - suitValue(key);
+        return cardValue(i) - cardValue(key);
     }
 
     static void printList(ArrayList a){
@@ -45,12 +53,13 @@ public class Main {
         return cards;
     }
 
+    static int suitValue(String card){
+        String suit = card.substring(1);
+        return letterToVal(suit);
+    }
     static int cardValue(String card){
         int value = 0;
         char temp = card.charAt(0);//get first value
-        if (Character.isLetter(temp)) value += letterToVal(Character.toString(temp));
-        else value += Integer.parseInt(Character.toString(temp));
-        temp = card.charAt(1);
         if (Character.isLetter(temp)) value += letterToVal(Character.toString(temp));
         else value += Integer.parseInt(Character.toString(temp));
         return value;
