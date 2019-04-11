@@ -5,19 +5,18 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         Scanner kb = new Scanner(System.in);
-        ArrayList cards = inputToList(kb);
-        cards = insertionSort(cards, "suit");
-        cards = insertionSort(cards, "val");
+        ArrayList <String> cards = inputToList(kb);
+        //sort hands
         printList(cards);
         //printList(insertionSort(cards));
     }
 
-    static ArrayList insertionSort(ArrayList a, String t) throws IndexOutOfBoundsException{
+    static ArrayList insertionSort(ArrayList a) throws IndexOutOfBoundsException{
         int j = 1;
         while (j < a.size()){
             String key = (String)a.get(j);
             int i = j -1;
-            while (i > -1 && (compareType(t, ((String)a.get(i)), key)) > 0){ //change to > 0
+            while (i > -1 && (cardValue((String)a.get(i)) > cardValue(key))){
                 a.set(i+1, a.get(i));
                 i = i -1;
             }
@@ -25,12 +24,6 @@ public class Main {
             j = j+1;
         }
        return a;
-    }
-
-    static int compareType(String t, String i, String key){
-        if (t.equals("suit"))
-            return suitValue(i) - suitValue(key);
-        return cardValue(i) - cardValue(key);
     }
 
     static void printList(ArrayList a){
@@ -45,7 +38,7 @@ public class Main {
 
     static ArrayList inputToList(Scanner kb){
         ArrayList <String> cards = new ArrayList<>();
-        String str = kb.next();
+        String str = kb.next().trim();
         do{
             cards.add(str);
             str = kb.next().trim();
@@ -53,13 +46,12 @@ public class Main {
         return cards;
     }
 
-    static int suitValue(String card){
-        String suit = card.substring(1);
-        return letterToVal(suit);
-    }
     static int cardValue(String card){
         int value = 0;
         char temp = card.charAt(0);//get first value
+        if (Character.isLetter(temp)) value += letterToVal(Character.toString(temp));
+        else value += Integer.parseInt(Character.toString(temp));
+        temp = card.charAt(1);
         if (Character.isLetter(temp)) value += letterToVal(Character.toString(temp));
         else value += Integer.parseInt(Character.toString(temp));
         return value;
@@ -94,6 +86,12 @@ public class Main {
                 break;
         }
         return val;
+    }
+
+    class Hand{
+        Hand(String c1, String c2, String c3, String c4, String c5){
+
+        }
     }
 
 }
