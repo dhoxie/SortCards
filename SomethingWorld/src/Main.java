@@ -5,10 +5,12 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         Scanner kb = new Scanner(System.in);
-        ArrayList <String> cards = inputToList(kb);
-        //sort hands
+        ArrayList <ArrayList> cards = inputToList(kb);
+        //sort hands using outer list
+        for (int x=0; x < cards.size(); x++){
+            cards.set(x, insertionSort(cards.get(x)));
+        }
         printList(cards);
-        //printList(insertionSort(cards));
     }
 
     static ArrayList insertionSort(ArrayList a) throws IndexOutOfBoundsException{
@@ -26,27 +28,16 @@ public class Main {
        return a;
     }
 
-    static void printList(ArrayList a){
-        for (int i=0; i < a.size(); ){
-            for (int x=0; x < 4; x++, i++){
-                System.out.print(a.get(i) + " ");
+    static void printList(ArrayList <ArrayList> cards){
+        for (ArrayList<String> hand : cards) {
+            for (int x = 0; x < hand.size() - 1; x++) {
+                System.out.print(hand.get(x) + " ");
             }
-            System.out.print(a.get(i) + "\n");
-            i++;
+            System.out.print(hand.get(hand.size()) + "\n");
         }
     }
 
     static ArrayList inputToList(Scanner kb){
-        ArrayList <String> cards = new ArrayList<>();
-        String str = kb.next().trim();
-        do{
-            cards.add(str);
-            str = kb.next().trim();
-        }while(!str.equals("00"));
-        return cards;
-    }
-
-    static ArrayList takeInput(Scanner kb){
         ArrayList <ArrayList> cards = new ArrayList<>(); //store 5 card hands
         String str = kb.next().trim();
         do{
@@ -102,12 +93,6 @@ public class Main {
                 break;
         }
         return val;
-    }
-
-    class Hand{
-        Hand(String c1, String c2, String c3, String c4, String c5){
-
-        }
     }
 
 }
