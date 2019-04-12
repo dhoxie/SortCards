@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
@@ -7,8 +8,11 @@ public class Main {
         Scanner kb = new Scanner(System.in);
         ArrayList <ArrayList> cards = inputToList(kb);
         //sort hands using outer list
-        for (int x=0; x < cards.size(); x++){
-            cards.set(x, insertionSort(cards.get(x)));
+        //for (int x=0; x < cards.size(); x++){
+         //   cards.set(x, insertionSort(cards.get(x)));
+        //}
+        for (ArrayList hand: cards) {
+            insertionSort(hand);
         }
         printList(cards);
     }
@@ -29,11 +33,15 @@ public class Main {
     }
 
     static void printList(ArrayList <ArrayList> cards){
-        for (ArrayList<String> hand : cards) {
-            for (int x = 0; x < hand.size() - 1; x++) {
-                System.out.print(hand.get(x) + " ");
-            }
-            System.out.print(hand.get(hand.size()) + "\n");
+        for (ArrayList hand : cards) {
+            printHand(hand);
+            System.out.println();
+        }
+    }
+
+    static void printHand(ArrayList hand){
+        for (Object o : hand) {
+            System.out.print(o + " ");
         }
     }
 
