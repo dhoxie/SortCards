@@ -4,58 +4,52 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
         Scanner kb = new Scanner(System.in);
-        ArrayList <ArrayList> cards = inputToList(kb);
-        //sort hands using outer list
-        //for (int x=0; x < cards.size(); x++){
-         //   cards.set(x, insertionSort(cards.get(x)));
-        //}
-        for (ArrayList hand: cards) {
+        ArrayList <String []> cards = inputToList(kb);
+        for (String[] hand: cards) {
             insertionSort(hand);
         }
         printList(cards);
     }
 
-    static ArrayList insertionSort(ArrayList a) throws IndexOutOfBoundsException{
+    static String[] insertionSort(String[] a) throws IndexOutOfBoundsException{
         int j = 1;
-        while (j < a.size()){
-            String key = (String)a.get(j);
+        while (j < a.length){
+            String key = (String)Array.get(a, j);
             int i = j -1;
-            while (i > -1 && (cardValue((String)a.get(i)) > cardValue(key))){
-                a.set(i+1, a.get(i));
+            while (i > -1 && (cardValue((String)Array.get(a, i)) > cardValue(key))){
+                Array.set(a,i+1, Array.get(a, i));
                 i = i -1;
             }
-            a.set(i+1, key);
+            Array.set(a, i+1, key);
             j = j+1;
         }
        return a;
     }
 
-    static void printList(ArrayList <ArrayList> cards){
-        for (ArrayList hand : cards) {
+    static void printList(ArrayList <String []> cards){
+        for (String[] hand : cards) {
             printHand(hand);
             System.out.println();
         }
     }
 
-    static void printHand(ArrayList hand){
+    static void printHand(String[] hand){
         for (Object o : hand) {
             System.out.print(o + " ");
         }
     }
 
     static ArrayList inputToList(Scanner kb){
-        ArrayList <ArrayList> cards = new ArrayList<>(); //store 5 card hands
+        ArrayList <String []> cards = new ArrayList<>();
         String str = kb.next().trim();
         do{
-            //create a hand - arraylist of 5 strings
-            ArrayList <String> hand = new ArrayList<>();
-            for (int x=0; x<5; x++){//add only 5 cards to hand
-                hand.add(str);
+            //create a hand - array of 5 strings
+            String[] hand = new String[5];
+            for (int x=0; x<5; x++) {//add only 5 cards to hand
+                hand[x] = str;
                 str = kb.next().trim();
             }
-            //add hand to cards arraylist
             cards.add(hand);
         }while(!str.equals("00")); //leave when no more cards
         return cards;
