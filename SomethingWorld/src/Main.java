@@ -24,7 +24,7 @@ public class Main {
             Array.set(a, i+1, key);
             j = j+1;
         }
-       return a;
+        return a;
     }
 
     static void printList(ArrayList <String []> cards){
@@ -85,17 +85,18 @@ public class Main {
                 val = 13;
                 break;
             case "C":
-                val = 100;
-                break;
-            case "H":
                 val = 200;
                 break;
-            case "S":
-                val = 300;
+            case "H":
+                val = 100;
                 break;
+            case "S":
+                val = 0;
+                break;
+            case "D":
+                val = 300;
         }
         return val;
     }
 
 }
-
