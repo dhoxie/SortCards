@@ -4,15 +4,19 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner kb = new Scanner(System.in);
-        ArrayList <String []> cards = inputToList(kb);
-        for (String[] hand: cards) {
-            insertionSort(hand);
+        try {
+            Scanner kb = new Scanner(System.in);
+            ArrayList<String[]> cards = inputToList(kb);
+            for (String[] hand : cards) {
+                insertionSort(hand);
+            }
+            printList(cards);
+        }catch(Exception ex){
+            ex.printStackTrace();
         }
-        printList(cards);
     }
 
-    static String[] insertionSort(String[] a) throws IndexOutOfBoundsException{
+    static void insertionSort(String[] a) throws IndexOutOfBoundsException{
         int j = 1;
         while (j < a.length){
             String key = (String)Array.get(a, j);
@@ -24,23 +28,23 @@ public class Main {
             Array.set(a, i+1, key);
             j = j+1;
         }
-        return a;
     }
 
     static void printList(ArrayList <String []> cards){
         for (String[] hand : cards) {
             printHand(hand);
-            System.out.println();
         }
     }
 
     static void printHand(String[] hand){
-        for (Object o : hand) {
+        for (int i = 0; i < hand.length-1; i++) {
+            Object o = hand[i];
             System.out.print(o + " ");
         }
+        System.out.print(hand[hand.length-1] + "\n");
     }
 
-    static ArrayList inputToList(Scanner kb){
+    static ArrayList <String[]> inputToList(Scanner kb){
         ArrayList <String []> cards = new ArrayList<>();
         String str = kb.next().trim();
         do{
